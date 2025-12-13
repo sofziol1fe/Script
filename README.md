@@ -1,7 +1,5 @@
 # Apache
-## Support
 - Grow a garden
-
 # Importer
 ```luau
 local function import(owner, repo, file)
