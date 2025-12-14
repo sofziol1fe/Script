@@ -503,4 +503,6 @@ do warn([[
 
 ]]) end
 
+Configs = Module.Config:load()
+
 return Module, Configs
