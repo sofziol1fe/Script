@@ -99,7 +99,7 @@ Module.Config = (function()
 
 	function Config:load()
 		if not isfile(fullPath) then
-			Configs:save()
+			Config:save()
 		end
 
 		return HttpService:JSONDecode(readfile(fullPath))
