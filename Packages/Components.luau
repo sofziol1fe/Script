@@ -425,7 +425,6 @@ function Liquid:Template(Parent, Title, Desc, Padding)
 	UIStroke_1.Parent = Template
 	UIStroke_1.Color = Color3.fromRGB(25,25,25)
 	UIStroke_1.Thickness = 1
-	UIStroke_1.Transparency = 0.15
 
 	UICorner_1.Parent = Template
 	UICorner_1.CornerRadius = UDim.new(0,4)
@@ -1775,7 +1774,6 @@ function Liquid:Window(configs)
 				UIStroke_1.Parent = Template
 				UIStroke_1.Color = Color3.fromRGB(25,25,25)
 				UIStroke_1.Thickness = 1
-				UIStroke_1.Transparency = 0.15
 
 				UICorner_1.Parent = Template
 				UICorner_1.CornerRadius = UDim.new(0,4)
@@ -2459,7 +2457,6 @@ function Liquid:Window(configs)
 			UIStroke_1.Parent = Template
 			UIStroke_1.Color = Color3.fromRGB(25,25,25)
 			UIStroke_1.Thickness = 1
-			UIStroke_1.Transparency = 0.15
 
 			UICorner_1.Parent = Template
 			UICorner_1.CornerRadius = UDim.new(0,4)
@@ -3706,7 +3703,6 @@ function Liquid:Window(configs)
 			UIStroke_1.Parent = Template
 			UIStroke_1.Color = Color3.fromRGB(25,25,25)
 			UIStroke_1.Thickness = 1
-			UIStroke_1.Transparency = 0.15
 
 			UICorner_1.Parent = Template
 			UICorner_1.CornerRadius = UDim.new(0,4)
