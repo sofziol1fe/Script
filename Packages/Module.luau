@@ -145,7 +145,7 @@ end)()
 
 Module.Components = (function()
 	local Components = {}
-	
+
 	local Liquid = loadstring(game:HttpGet('https://raw.githubusercontent.com/sofziol1fe/Script/main/Packages/Components.luau', true))()
 
 	function Components:Window()
@@ -183,7 +183,7 @@ Module.Components = (function()
 			Callback = call
 		})
 	end
-	
+
 	function Components:Toggle(tabs, title, desc, setting, call)
 		local thread = nil
 
@@ -278,10 +278,10 @@ Module.Components = (function()
 			end,
 		})
 	end
-	
+
 	function Components:Managers(window)
 		local misc = Components:Tabs(window, 136648496711424) do
-			Components:Section(misc, "Platform", 95120001782450) do
+			Components:Section(misc, "Support", 95120001782450) do
 				misc:CodeBlock({
 					Header = "discord.gg",
 					Code = 'https://discord.gg/JXgCz6uC2U',
@@ -405,12 +405,45 @@ Module.Components = (function()
 
 		return misc
 	end
-	
+
 	function Components:Configuration(window)
 		local settings = window:Managers()
 
 		do
+			if not _ENV.AutoExecute then
+				_ENV.AutoExecute = (function(value)
+					if value then
+						if queue_on_teleport then
+							pcall(queue_on_teleport, [[
+							local function import(owner, repo, file)
+								local URL = string.format(
+									"https://raw.githubusercontent.com/%s/%s/main/%s",
+									owner, repo, file
+								)
+
+								return loadstring(game:HttpGet(URL))
+							end
+
+							import("sofziol1fe", "Script", "main.luau")()
+						]])
+						end
+					else
+						if clearteleportqueue or clear_teleport_queue then
+							pcall(clearteleportqueue or clear_teleport_queue)
+						end
+					end
+				end)
+			end
+		end
+
+		do
 			Components:Section(settings, "Configuration", 108001290138717) do
+				Module.Config:def('Rexecute', false)
+				
+				Components:Toggle(settings, 'Rexecute', 'Automatically re-executes the script when you join or rejoin the game.', 'Rexecute', function(value)
+					_ENV.AutoExecute(value)
+				end)
+				
 				Components:Button(settings, "Remove workspace [ Current game ]", 'Reset all saved workspace data back to default settings.', function()
 					local file = Module.Config:path()
 
@@ -450,8 +483,24 @@ Module.Components = (function()
 			end
 		end
 	end
-	
+
 	return Components
 end)()
+
+do warn([[         
+
+  /$$$$$$                                /$$                      
+ /$$__  $$                              | $$                      
+| $$  \ $$  /$$$$$$   /$$$$$$   /$$$$$$$| $$$$$$$   /$$$$$$       
+| $$$$$$$$ /$$__  $$ |____  $$ /$$_____/| $$__  $$ /$$__  $$      
+| $$__  $$| $$  \ $$  /$$$$$$$| $$      | $$  \ $$| $$$$$$$$      
+| $$  | $$| $$  | $$ /$$__  $$| $$      | $$  | $$| $$_____/      
+| $$  | $$| $$$$$$$/|  $$$$$$$|  $$$$$$$| $$  | $$|  $$$$$$$      
+|__/  |__/| $$____/  \_______/ \_______/|__/  |__/ \_______/      
+          | $$                                                    
+          | $$                                                    
+          |__/                                                    
+
+]]) end
 
 return Module, Configs
