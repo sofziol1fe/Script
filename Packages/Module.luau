@@ -287,7 +287,7 @@ Module.Components = (function()
 	end
 
 	function Components:Managers(window)
-		local misc = Components:Tabs(window, 136648496711424) do
+		local misc = Components:Tabs(window, 106864141877672) do
 			Components:Section(misc, "Support", 95120001782450) do
 				misc:CodeBlock({
 					Header = "discord.gg",
