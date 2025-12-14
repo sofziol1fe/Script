@@ -3,6 +3,7 @@ local _ENV = (getgenv or getrenv or getfenv)()
 local Module = {}
 local Configs = {}
 local Threads = {}
+local __index = {}
 
 local Connections = _ENV.Connections or {} do
 	_ENV.Connections = Connections
@@ -184,8 +185,14 @@ Module.Components = (function()
 		})
 	end
 
-	function Components:Toggle(tabs, title, desc, setting, call)
+	function Components:Toggle(tabs, title, desc, setting, call, force)
 		local thread = nil
+		
+		do
+			if force and not __index[setting] then
+				table.insert(__index, setting)
+			end
+		end
 
 		return tabs:Toggle({
 			Title = title,
@@ -504,5 +511,6 @@ do warn([[
 ]]) end
 
 Configs = Module.Config:load()
+Module.index = __index
 
 return Module, Configs
