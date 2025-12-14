@@ -4292,7 +4292,7 @@ function Liquid:Window(configs)
 	end
 
 	function ListTabs:Managers()
-		local Setting = self:Tabs(81246215620663) do
+		local Setting = self:Tabs(109085059016492) do
 			Setting:Section({
 				Title = "Appearance",
 				Icon = 92721515638108
