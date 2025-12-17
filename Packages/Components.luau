@@ -241,7 +241,7 @@ function Library:Window(options)
 	Background_1.Size = UDim2.new(0, 500,0, 350)
 
 	UICorner_1.Parent = Background_1
-	
+
 	local sToggle = Instance.new("ScreenGui") do
 		sToggle.Name = "Liquid"
 		sToggle.Parent = self:Parent()
@@ -897,6 +897,7 @@ function Library:Window(options)
 		Left_1.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Right
 
 		UIListLayout_1.Parent = Left_1
+		UIListLayout_1.Padding = UDim.new(0, 8)
 		UIListLayout_1.HorizontalAlignment = Enum.HorizontalAlignment.Center
 		UIListLayout_1.SortOrder = Enum.SortOrder.LayoutOrder
 
@@ -932,6 +933,7 @@ function Library:Window(options)
 		Right_1.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Right
 
 		UIListLayout_3.Parent = Right_1
+		UIListLayout_3.Padding = UDim.new(0, 8)
 		UIListLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
 		UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
 
@@ -1036,14 +1038,14 @@ function Library:Window(options)
 			Title_1.Size = UDim2.new(0.899999976, 0,1, 0)
 			Title_1.FontFace = Font.new(
 				"rbxassetid://12187374537",
-				Enum.FontWeight.Regular,
+				Enum.FontWeight.Medium,
 				Enum.FontStyle.Normal
 			)
 			Title_1.RichText = true
 			Title_1.Text = Title
 			Title_1.TextColor3 = Color3.fromRGB(255,255,255)
 			Title_1.TextSize = 14
-			Title_1.TextTransparency = 0.30000001192092896
+			Title_1.TextTransparency = 0.15
 
 			UIListLayout_1:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
 				Section.Size = UDim2.new(0.95, 0,0, UIListLayout_1.AbsoluteContentSize.Y + 5)
@@ -1404,7 +1406,7 @@ function Library:Window(options)
 				Boxvalue_1.TextTransparency = 0.5
 				Boxvalue_1.TextXAlignment = Enum.TextXAlignment.Right
 				Boxvalue_1.TextTruncate = Enum.TextTruncate.AtEnd
-				
+
 				local function roundToDecimal(value, decimals)
 					local factor = 10 ^ decimals
 					return math.floor(value * factor + 0.5) / factor
@@ -1446,18 +1448,18 @@ function Library:Window(options)
 					local value = relativeX * (Max - Min) + Min
 					updateSlider(value)
 				end
-				
+
 				local dragging = false
-				
+
 				local Button = Library:Button(Slider)
-				
+
 				Boxvalue_1.ZIndex = Button.ZIndex + 1
-				
+
 				Boxvalue_1.FocusLost:Connect(function()
 					local value = tonumber(Boxvalue_1.Text) or Min
 					updateSlider(value)
 				end)
-				
+
 				Button.InputBegan:Connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 						dragging = true
@@ -1478,11 +1480,11 @@ function Library:Window(options)
 					end
 				end)
 			end
-			
+
 			function Class:Textbox(options)
 				local Text = options.Text
 				local Callback = options.Callback
-				
+
 				local Template = Instance.new("Frame")
 				local UICorner_1 = Instance.new("UICorner")
 				local UIStroke_1 = Instance.new("UIStroke")
@@ -1530,12 +1532,12 @@ function Library:Window(options)
 				TextBox_1.TextSize = 12
 				TextBox_1.TextTransparency = 0.5
 				TextBox_1.TextTruncate = Enum.TextTruncate.AtEnd
-				
+
 				TextBox_1.FocusLost:Connect(function()
 					Callback(TextBox_1.Text)
 				end)
 			end
-			
+
 			function Class:Label(text)
 				local Label = Instance.new("TextLabel")
 
@@ -1556,13 +1558,13 @@ function Library:Window(options)
 				Label.TextColor3 = Color3.fromRGB(255,255,255)
 				Label.TextSize = 13
 				Label.TextTransparency = 0.30000001192092896
-				
+
 				local attribute = {}
-				
+
 				function attribute :Change(t)
 					Label.Text = tostring(t)
 				end
-				
+
 				return attribute 
 			end
 
@@ -1578,10 +1580,10 @@ function Library:Window(options)
 				Line.BorderSizePixel = 0
 				Line.Position = UDim2.new(0, 0,1, 0)
 				Line.Size = UDim2.new(1, 0,0, 1)
-				
+
 				return Line
 			end
-			
+
 			function Class:List(options)
 				local Title = options.Title or "Title"
 				local List = options.List or {}
@@ -1590,7 +1592,7 @@ function Library:Window(options)
 				local Callback = options.Callback or (function( ... )
 					return ...
 				end)
-				
+
 				local Template = Instance.new("Frame")
 				local UICorner_1 = Instance.new("UICorner")
 				local UIStroke_1 = Instance.new("UIStroke")
@@ -1670,7 +1672,7 @@ function Library:Window(options)
 				Desc_1.TextSize = 10
 				Desc_1.TextXAlignment = Enum.TextXAlignment.Left
 				Desc_1.TextTruncate = Enum.TextTruncate.AtEnd
-				
+
 				local function Settext()
 					if typeof(Value) == 'table' then
 						Desc_1.Text = table.concat(Value, ", ")
@@ -1707,9 +1709,9 @@ function Library:Window(options)
 				ImageLabel_1.Size = UDim2.new(0, 20,0, 20)
 				ImageLabel_1.Image = "rbxassetid://132291592681506"
 				ImageLabel_1.ImageTransparency = 0.5
-				
+
 				local Button = Library:Button(Template)
-				
+
 				local Dropdown = Instance.new("Frame")
 				local UIStroke_1 = Instance.new("UIStroke")
 				local UICorner_1 = Instance.new("UICorner")
@@ -1841,11 +1843,11 @@ function Library:Window(options)
 				UIListLayout_2.Padding = UDim.new(0,3)
 				UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
 				UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-				
+
 				UIListLayout_2:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
 					Scrolling_1.CanvasSize = UDim2.new(0, 0,0, UIListLayout_2.AbsoluteContentSize.Y + 15)
 				end)
-				
+
 				local isOpen = false
 
 				UserInputService.InputBegan:Connect(function(A)
@@ -1865,7 +1867,7 @@ function Library:Window(options)
 						end
 					end
 				end)
-				
+
 				local function OnDropdownOpen()
 					for _, v in pairs(Page_1:GetChildren()) do
 						if v.Name == "Dropdown" and v.Visible then
@@ -1892,9 +1894,9 @@ function Library:Window(options)
 						Dropdown.Position = UDim2.new(0.5, 0,0.3, 0)
 					end
 				end
-				
+
 				Button.MouseButton1Click:Connect(OnDropdownOpen)
-				
+
 				TextBox_1.Changed:Connect(function()
 					local SearchT = string.lower(TextBox_1.Text)
 
@@ -1909,7 +1911,7 @@ function Library:Window(options)
 						end
 					end
 				end)
-				
+
 				local selectedItem
 
 				local Setting = {}
@@ -1967,12 +1969,12 @@ function Library:Window(options)
 
 					return false
 				end
-				
+
 				function Setting:AddList(Name)
 					local AddList = Instance.new("Frame")
 					local UICorner_1 = Instance.new("UICorner")
 					local Title_1 = Instance.new("TextLabel")
-					
+
 					local Click = Library:Button(AddList)
 
 					AddList.Name = "AddList"
@@ -2007,7 +2009,7 @@ function Library:Window(options)
 					Title_1.TextColor3 = Color3.fromRGB(255,255,255)
 					Title_1.TextSize = 13
 					Title_1.TextTransparency = 0.30000001192092896
-					
+
 					local function OnValue(value)
 						if value then
 							Title_1.TextColor3 = Color3.fromRGB(255, 0, 127)
@@ -2088,11 +2090,11 @@ function Library:Window(options)
 
 					Click.MouseButton1Click:Connect(OnSelected)
 				end
-				
+
 				for _, name in ipairs(List) do
 					Setting:AddList(name)
 				end
-				
+
 				return Setting
 			end
 
