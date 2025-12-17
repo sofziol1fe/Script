@@ -147,45 +147,35 @@ end)()
 Module.Components = (function()
 	local Components = {}
 
-	local Liquid = loadstring(game:HttpGet('https://raw.githubusercontent.com/sofziol1fe/Script/main/Packages/Components.luau', true))()
+	local Xova = loadstring(game:HttpGet('https://raw.githubusercontent.com/sofziol1fe/Script/main/Packages/Components.luau', true))()
 
 	function Components:Window()
-		return Liquid:Window({
-			Title = "Apache",
-			Description = "https://discord.gg/JXgCz6uC2U",
-			Logo = 78491032434067,
-			Highligh = Color3.fromRGB(255, 131, 69),
-			Transparent = true
-		})
+		return Xova:Window({})
 	end
 
-	function Components:Tabs(window, asset)
-		return window:Tabs(asset)
-	end
-
-	function Components:Section(tabs, text, asset)
-		return tabs:Section({
-			Title = text,
+	function Components:Tabs(window, title, desc, asset)
+		return window:Tabs({
+			Title = title,
+			Desc = desc,
 			Icon = asset
 		})
 	end
 
-	function Components:Paragraph(tabs, title, desc)
-		return tabs:Paragraph({
-			Title = title,
-			Desc = desc
+	function Components:Section(tabs, text, side)
+		return tabs:Section({
+			Title = text,
+			Side = side
 		})
 	end
 
-	function Components:Button(tabs, title, desc, call)
+	function Components:Button(tabs, title, call)
 		return tabs:Button({
 			Title = title,
-			Desc = desc,
 			Callback = call
 		})
 	end
 
-	function Components:Toggle(tabs, title, desc, setting, call, force)
+	function Components:Toggle(tabs, title, setting, call, force)
 		local thread = nil
 		
 		do
@@ -196,9 +186,8 @@ Module.Components = (function()
 
 		return tabs:Toggle({
 			Title = title,
-			Desc = desc,
 			Value = Configs[setting],
-			Callback = function(self, state)
+			Callback = function(state)
 				Configs[setting] = state
 				Module.Config:save(setting, state)
 
@@ -221,12 +210,10 @@ Module.Components = (function()
 		})
 	end
 
-	function Components:Textbox(tabs, title, desc, setting, call)
+	function Components:Textbox(tabs, setting, call)
 		return tabs:Textbox({
-			Title = title,
-			Desc = desc,
-			Value = tostring(Configs[setting]),
-			Callback = function(self, text)
+			Text = tostring(Configs[setting]),
+			Callback = function(text)
 				Configs[setting] = text
 				Module.Config:save(setting, text)
 
@@ -237,9 +224,9 @@ Module.Components = (function()
 		})
 	end
 
-	function Components:Slider(tabs, asset, min, max, setting, rounding, call)
+	function Components:Slider(tabs, title, min, max, setting, rounding, call)
 		return tabs:Slider({
-			Icon = asset,
+			Title = title,
 			Min = min,
 			Max = max,
 			Value = Configs[setting],
@@ -255,22 +242,8 @@ Module.Components = (function()
 		})
 	end
 
-	function Components:Input(tabs, title, desc, enum, call)
-		return tabs:Input({
-			Title = title,
-			Desc = desc,
-			Key = enum,
-			Value = false,
-			Callback = function(self, key, state)
-				if call then
-					call(key, state)
-				end
-			end,
-		})
-	end
-
 	function Components:List(tabs, title, list, setting, call)
-		return tabs:Dropdown({
+		return tabs:List({
 			Title = title,
 			List = list,
 			Value = Configs[setting],
@@ -287,21 +260,13 @@ Module.Components = (function()
 	end
 
 	function Components:Managers(window)
-		local misc = Components:Tabs(window, 106864141877672) do
-			Components:Section(misc, "Support", 95120001782450) do
-				misc:CodeBlock({
-					Header = "discord.gg",
-					Code = 'https://discord.gg/JXgCz6uC2U',
-					Icon = 95120001782450
-				})
-			end
-
-			Components:Section(misc, "Performance", 106864141877672) do
-				Components:Toggle(misc, '3d Rendering [ White Screen ]', 'Disables 3D rendering by applying a white overlay, improving performance on low-load mode.', '3d Rendering', function(value)
+		local misc = Components:Tabs(window, 'Miscillinouse', 'Performance, Server, Configs', 106864141877672) do
+			local Performance = Components:Section(misc, "Performance", 'l') do
+				Components:Toggle(Performance, 'White Screen', '3d Rendering', function(value)
 					RunService:Set3dRenderingEnabled(if value then false else true)
 				end)
 
-				Components:Button(misc, "Low Graphic Quality", 'Reduces visual quality to lower system load and improve overall performance.', function()
+				Components:Button(Performance, "Low Graphic Quality", function()
 					local Terrain = workspace:FindFirstChildOfClass('Terrain') do
 						Terrain.WaterWaveSize = 0
 						Terrain.WaterWaveSpeed = 0
@@ -311,17 +276,11 @@ Module.Components = (function()
 						game.Lighting.FogEnd = 9e9
 						settings().Rendering.QualityLevel = 1
 					end
-
-					window:Notification({
-						Title = 'Low graphic quality has been enabled.',
-						Icon = 134678676020956,
-						Duration = 3
-					})
 				end)
 			end
 
-			Components:Section(misc, "Server", 110725435294852) do
-				Module.Config:def('JobId', "N/A")
+			local Server = Components:Section(misc, "Server", 'r') do
+				Module.Config:def('JobId', tostring(game.JobId))
 
 				Module.server = (function()
 					local server = {}
@@ -343,12 +302,6 @@ Module.Components = (function()
 
 							return TeleportService:Teleport(game.PlaceId, Players.LocalPlayer)
 						end
-
-						window:Notification({
-							Title = 'Rejoining ( ... )',
-							Icon = 134678676020956,
-							Duration = 3
-						})
 
 						return TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, Players.LocalPlayer)
 					end
@@ -376,119 +329,33 @@ Module.Components = (function()
 					return server
 				end)()
 
-				misc:CodeBlock({
-					Header = "JobId.luau",
-					Code = tostring(game.JobId),
-					Icon = 84780130894041
-				})
+				Components:Textbox(Server, 'JobId')
 
-				Components:Textbox(misc, 'Job Identifier [ JobId ]', 'Enter a Job Identifier here to join a specific server', 'JobId')
-
-				Components:Button(misc, "Join", 'Join the selected JobId', function()
-					window:Notification({
-						Title = 'Joining ( ... )',
-						Icon = 134678676020956,
-						Duration = 3
-					})
-
+				Components:Button(Server, "Join", function()
 					Module.server:Join(Configs['JobId'])
 				end)
 
-				Components:Button(misc, "Rejoin", 'Leave and rejoin the current server', function()
+				Components:Button(Server, "Rejoin", function()
 					Module.server:Rejoin()
 				end)
 
-				Components:Button(misc, "Change Server", 'Move to another server instance for a fresh session.', function()
-					window:Notification({
-						Title = 'Changing ( ... )',
-						Icon = 134678676020956,
-						Duration = 3
-					})
-
+				Components:Button(Server, "Change Server", function()
 					Module.server:Changed()
+				end)
+			end
+			
+			local Configuration = Components:Section(misc, "Configuration", 'l') do
+				Components:Button(Configuration, "Remove workspace", function()
+					local file = Module.Config:path()
+
+					if isfile(file) then
+						pcall(delfile, file)
+					end
 				end)
 			end
 		end
 
 		return misc
-	end
-
-	function Components:Configuration(window)
-		local settings = window:Managers()
-
-		do
-			if not _ENV.AutoExecute then
-				_ENV.AutoExecute = (function(value)
-					if value then
-						if queue_on_teleport then
-							pcall(queue_on_teleport, [[
-							local function import(owner, repo, file)
-								local URL = string.format(
-									"https://raw.githubusercontent.com/%s/%s/main/%s",
-									owner, repo, file
-								)
-
-								return loadstring(game:HttpGet(URL))
-							end
-
-							import("sofziol1fe", "Script", "main.luau")()
-						]])
-						end
-					else
-						if clearteleportqueue or clear_teleport_queue then
-							pcall(clearteleportqueue or clear_teleport_queue)
-						end
-					end
-				end)
-			end
-		end
-
-		do
-			Components:Section(settings, "Configuration", 108001290138717) do
-				Module.Config:def('Rexecute', false)
-				
-				Components:Toggle(settings, 'Rexecute', 'Automatically re-executes the script when you join or rejoin the game.', 'Rexecute', function(value)
-					_ENV.AutoExecute(value)
-				end)
-				
-				Components:Button(settings, "Remove workspace [ Current game ]", 'Reset all saved workspace data back to default settings.', function()
-					local file = Module.Config:path()
-
-					if isfile(file) then
-						pcall(delfile, file)
-
-						window:Notification({
-							Title = 'Deleted file success',
-							Icon = 136704231139251,
-							Duration = 3
-						})
-					else
-						window:Notification({
-							Title = 'File not found.',
-							Icon = 127194456372995,
-							Duration = 3
-						})
-					end
-				end)
-
-				Components:Button(settings, "Remove workspace [ Any game ]", 'Reset all saved workspace data back to default settings.', function()
-					if isfile('Apache') then
-						pcall(delfile, 'Apache')
-						window:Notification({
-							Title = 'Deleted file success',
-							Icon = 136704231139251,
-							Duration = 3
-						})
-					else
-						window:Notification({
-							Title = 'File not found.',
-							Icon = 127194456372995,
-							Duration = 3
-						})
-					end
-				end)
-			end
-		end
 	end
 
 	return Components
