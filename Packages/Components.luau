@@ -1111,7 +1111,7 @@ function Library:Window(options)
 				local function OnChanged(value)
 					if value then 
 						ImageLabel_1.Size = UDim2.new(0.85, 0,0.85, 0)
-
+						Callback(Value)
 						Library:Tween({
 							v = Highligh_1,
 							t = 0.5,
@@ -1152,6 +1152,7 @@ function Library:Window(options)
 							}
 						}):Play()
 					else
+						Callback(Value)
 						Library:Tween({
 							v = BaseTitle,
 							t = 0.5,
@@ -1189,11 +1190,18 @@ function Library:Window(options)
 				local function Init()
 					Value = not Value
 
-					Callback(Value)
 					OnChanged(Value)
 				end
 
-				Button.MouseButton1Click:Connect(Init)
+				Button.MouseButton1Click:Connect(function()
+					for _, v in pairs(Background_1:GetChildren()) do
+						if v.Name == "Dropdown" and v.Visible then
+							return
+						end
+					end
+					
+					Init()
+				end)
 
 				OnChanged(Value)
 			end
@@ -1244,6 +1252,12 @@ function Library:Window(options)
 				local ButtonC = Library:Button(Button)
 
 				ButtonC.MouseButton1Click:Connect(function()
+					for _, v in pairs(Background_1:GetChildren()) do
+						if v.Name == "Dropdown" and v.Visible then
+							return
+						end
+					end
+					
 					Callback()
 					Library:Effect(ButtonC, Button)
 				end)
@@ -1462,6 +1476,12 @@ function Library:Window(options)
 
 				Button.InputBegan:Connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+						for _, v in pairs(Background_1:GetChildren()) do
+							if v.Name == "Dropdown" and v.Visible then
+								return
+							end
+						end
+						
 						dragging = true
 						move(input)
 					end
@@ -1869,7 +1889,7 @@ function Library:Window(options)
 				end)
 
 				local function OnDropdownOpen()
-					for _, v in pairs(Page_1:GetChildren()) do
+					for _, v in pairs(Background_1:GetChildren()) do
 						if v.Name == "Dropdown" and v.Visible then
 							return
 						end
