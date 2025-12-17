@@ -717,6 +717,7 @@ function Library:Window(options)
 	UIListLayout_1.Padding = UDim.new(0,5)
 	UIListLayout_1.FillDirection = Enum.FillDirection.Horizontal
 	UIListLayout_1.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout_1.Wraps = true
 
 	UIPadding_1.Parent = TabsScrolling_1
 	UIPadding_1.PaddingBottom = UDim.new(0,5)
