@@ -4,7 +4,10 @@ until game:IsLoaded() and game:GetService('Players').LocalPlayer
 
 local _ENV = (getgenv or getrenv or getfenv)()
 local __index = {
-	[95206881] = 'test.luau'
+	[95206881] = 'test.luau',
+	[2753915549] = 'Bloxfruit.luau',
+	[4442272183] = 'Bloxfruit.luau',
+	[7449423635] = 'Bloxfruit.luau'
 }
 
 do
@@ -14,13 +17,11 @@ do
 end
 
 do
-	local Last = _ENV.Debounce
-
-	if Last and (tick() - Last) <= 5 then
+	if _ENV.Debounce then
 		return nil
 	end
 
-	_ENV.Debounce = tick()
+	_ENV.Debounce = true
 end
 
 local function fetch(owner, repo, file)
