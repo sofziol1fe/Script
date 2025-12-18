@@ -848,7 +848,8 @@ function Library:Window(options)
 		)
 		Desc_1.RichText = true
 		Desc_1.Text = Desc
-		Desc_1.TextColor3 = Color3.fromRGB(145,145,145)
+		Desc_1.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Desc_1.TextTransparency = 0.2
 		Desc_1.TextSize = 10
 		Desc_1.TextXAlignment = Enum.TextXAlignment.Left
 
