@@ -218,6 +218,8 @@ end
 function Library:Window(options)
 	local Title = options.Title or "Xova"
 	local SubTitle = options.Desc or "Made by s1nve"
+	
+	local SCALER = Mobile and 0.945 or 1.1
 
 	local Xova = Instance.new("ScreenGui")
 	local Background_1 = Instance.new("Frame")
@@ -225,6 +227,8 @@ function Library:Window(options)
 	local Shadow_1 = Instance.new("ImageLabel")
 	local ShadowCorner_1 = Instance.new("ImageLabel")
 	local UIScale_1 = Instance.new("UIScale")
+	
+	UIScale_1.Scale = SCALER
 
 	Xova.Name = "Xova"
 	Xova.Parent = Library:Parent()
@@ -261,7 +265,7 @@ function Library:Window(options)
 		Toggle.BackgroundTransparency = 1
 		Toggle.BorderColor3 = Color3.fromRGB(0,0,0)
 		Toggle.BorderSizePixel = 0
-		Toggle.Position = UDim2.new(0.5, 0,0.015, 0)
+		Toggle.Position = UDim2.new(0.5, 0,0.025, 0)
 		Toggle.Size = UDim2.new(0, 200,0, 7)
 		Toggle.Image = "rbxassetid://80999662900595"
 		Toggle.ImageTransparency = 0.699999988079071
@@ -278,7 +282,7 @@ function Library:Window(options)
 		Input_1.BorderColor3 = Color3.fromRGB(0,0,0)
 		Input_1.BorderSizePixel = 0
 		Input_1.Position = UDim2.new(0.5, 0,0.5, 0)
-		Input_1.Size = UDim2.new(1, 40,1, 40)
+		Input_1.Size = UDim2.new(1, 30,1, 30)
 		Input_1.Font = Enum.Font.SourceSans
 		Input_1.Text = ""
 		Input_1.TextSize = 14
@@ -306,7 +310,7 @@ function Library:Window(options)
 					t = 0.3,
 					s = "Sine",
 					d = "Out",
-					g = {Scale = 1}
+					g = {Scale = SCALER}
 				}):Play()
 				Library:Tween({
 					v = Background_1,
@@ -942,13 +946,18 @@ function Library:Window(options)
 		UIPadding_2.PaddingBottom = UDim.new(0,1)
 		UIPadding_2.PaddingTop = UDim.new(0,1)
 
-		UIListLayout_3:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-			Right_1.CanvasSize = UDim2.new(0, 0, 0, UIListLayout_3.AbsoluteContentSize.Y + 15)
-		end)
+		local function updateSizes()
+			local scale = UIScale_1.Scale or 1
+			
+			Left_1.CanvasSize = UDim2.new(0, 0, 0, (UIListLayout_1.AbsoluteContentSize.Y + 15) / scale)
 
-		UIListLayout_1:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-			Left_1.CanvasSize = UDim2.new(0, 0, 0, UIListLayout_1.AbsoluteContentSize.Y + 15)
-		end)
+			Right_1.CanvasSize = UDim2.new(0, 0, 0, (UIListLayout_3.AbsoluteContentSize.Y + 15) / scale)
+		end
+
+		UIListLayout_1:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateSizes)
+		UIListLayout_3:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateSizes)
+
+		updateSizes()
 
 		local function OnSelectPage()
 			for _, v in pairs(Page_1:GetChildren()) do
@@ -1049,7 +1058,9 @@ function Library:Window(options)
 			Title_1.TextTransparency = 0.15
 
 			UIListLayout_1:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
-				Section.Size = UDim2.new(0.95, 0,0, UIListLayout_1.AbsoluteContentSize.Y + 5)
+				local scale = UIScale_1.Scale or 1
+
+				Section.Size = UDim2.new(0.95, 0, 0, (UIListLayout_1.AbsoluteContentSize.Y + 5) / scale)
 			end)
 
 			local Class = {}
@@ -1200,7 +1211,7 @@ function Library:Window(options)
 							return
 						end
 					end
-					
+
 					Init()
 				end)
 
@@ -1258,7 +1269,7 @@ function Library:Window(options)
 							return
 						end
 					end
-					
+
 					Callback()
 					Library:Effect(ButtonC, Button)
 				end)
@@ -1482,7 +1493,7 @@ function Library:Window(options)
 								return
 							end
 						end
-						
+
 						dragging = true
 						move(input)
 					end
@@ -1866,7 +1877,7 @@ function Library:Window(options)
 				UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
 
 				UIListLayout_2:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
-					Scrolling_1.CanvasSize = UDim2.new(0, 0,0, UIListLayout_2.AbsoluteContentSize.Y + 15)
+					Scrolling_1.CanvasSize = UDim2.new(0, 0,0, (UIListLayout_2.AbsoluteContentSize.Y + 15 / UIScale_1.Scale))
 				end)
 
 				local isOpen = false
@@ -1996,8 +2007,6 @@ function Library:Window(options)
 					local UICorner_1 = Instance.new("UICorner")
 					local Title_1 = Instance.new("TextLabel")
 
-					local Click = Library:Button(AddList)
-
 					AddList.Name = "AddList"
 					AddList.Parent = Scrolling_1
 					AddList.BackgroundColor3 = Color3.fromRGB(255,255,255)
@@ -2006,6 +2015,8 @@ function Library:Window(options)
 					AddList.BorderSizePixel = 0
 					AddList.Size = UDim2.new(1, 0,0, 25)
 					AddList.ZIndex = 56
+					
+					local Click = Library:Button(AddList)
 
 					UICorner_1.Parent = AddList
 					UICorner_1.CornerRadius = UDim.new(0,3)
@@ -2143,7 +2154,7 @@ function Library:Window(options)
 	Library:Draggable(Background_1)
 
 	UIListLayout_1:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-		TabsScrolling_1.CanvasSize = UDim2.new(0, 0, 0, UIListLayout_1.AbsoluteContentSize.Y + 15)
+		TabsScrolling_1.CanvasSize = UDim2.new(0, 0, 0, (UIListLayout_1.AbsoluteContentSize.Y + 15 / UIScale_1.Scale))
 	end)
 
 	UIPageLayout_1:JumpTo(Main)
