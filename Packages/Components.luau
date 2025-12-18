@@ -219,7 +219,7 @@ function Library:Window(options)
 	local Title = options.Title or "Xova"
 	local SubTitle = options.Desc or "Made by s1nve"
 	
-	local SCALER = Mobile and 0.945 or 1.1
+	local SCALER = Mobile and 0.925 or 1.1
 
 	local Xova = Instance.new("ScreenGui")
 	local Background_1 = Instance.new("Frame")
