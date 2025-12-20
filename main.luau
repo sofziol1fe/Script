@@ -5,9 +5,9 @@ until game:IsLoaded() and game:GetService('Players').LocalPlayer
 local _ENV = (getgenv or getrenv or getfenv)()
 local __index = {
 	[95206881] = 'test.luau',
-	[2753915549] = 'Bloxfruit.luau',
-	[4442272183] = 'Bloxfruit.luau',
-	[7449423635] = 'Bloxfruit.luau'
+	[2753915549] = '85c73456d1ac18073c051e365dfc21c39d9afbab74b6c49675a8b049d924dbef',
+	[4442272183] = '85c73456d1ac18073c051e365dfc21c39d9afbab74b6c49675a8b049d924dbef',
+	[7449423635] = '85c73456d1ac18073c051e365dfc21c39d9afbab74b6c49675a8b049d924dbef'
 }
 
 do
@@ -26,12 +26,12 @@ end
 
 local function fetch(owner, repo, file)
 	local url = string.format(
-		"https://raw.githubusercontent.com/%s/%s/main/Game/%s",
-		owner, repo, file
+		"https://api.junkie-development.de/api/v1/luascripts/public/%s/download",
+		owner
 	)
 
 	local result = game:HttpGet(url)
 	return loadstring(game:HttpGet(url))
 end
 
-return fetch("sofziol1fe", "Script", __index[game.PlaceId])()
+return fetch(__index[game.PlaceId])()
