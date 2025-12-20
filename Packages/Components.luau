@@ -219,7 +219,7 @@ function Library:Window(options)
 	local Title = options.Title or "Xova"
 	local SubTitle = options.Desc or "Made by s1nve"
 	
-	local SCALER = Mobile and 0.925 or 1.1
+	local SCALER = Mobile and 0.9 or 1.1
 
 	local Xova = Instance.new("ScreenGui")
 	local Background_1 = Instance.new("Frame")
@@ -2159,6 +2159,38 @@ function Library:Window(options)
 	end)
 
 	UIPageLayout_1:JumpTo(Main)
+	
+	local Large = 1.1
+	local Medium = 0.945
+	local Small = 0.9
+	
+	local function TweenScale(size)
+		if size == "Large" then
+			SCALER = Large
+		elseif size == 'Medium' then
+			SCALER = Medium
+		elseif size == 'Small' then
+			SCALER = Small
+		end
+		
+		Library:Tween({
+			v = UIScale_1,
+			t = 0.3,
+			s = "Back",
+			d = "Out",
+			g = {Scale = SCALER}
+		}):Play()
+	end
+	
+	function Window:Size(tab)
+		return tab:List({
+			Title = 'Interface Size',
+			List = {"Large", "Medium", "Small"},
+			Value = "Medium",
+			Multi = false,
+			Callback = TweenScale,
+		})
+	end
 
 	return Window
 end
