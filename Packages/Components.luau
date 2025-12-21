@@ -1578,9 +1578,10 @@ function Library:Window(options)
 				Label.Parent = Section
 				Label.BackgroundColor3 = Color3.fromRGB(255,255,255)
 				Label.BackgroundTransparency = 1
+				Label.AutomaticSize = Enum.AutomaticSize.Y
 				Label.BorderColor3 = Color3.fromRGB(0,0,0)
 				Label.BorderSizePixel = 0
-				Label.Size = UDim2.new(0.949999988, 0,0, 14)
+				Label.Size = UDim2.new(0.9, 0,0, 14)
 				Label.FontFace = Font.new(
 					"rbxassetid://12187374537",
 					Enum.FontWeight.Medium,
