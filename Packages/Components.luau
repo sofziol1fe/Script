@@ -1592,6 +1592,7 @@ function Library:Window(options)
 				Label.TextColor3 = Color3.fromRGB(255,255,255)
 				Label.TextSize = 13
 				Label.TextTransparency = 0.30000001192092896
+				Label.TextWrapped = true
 
 				local attribute = {}
 
