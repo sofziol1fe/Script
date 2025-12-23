@@ -1,3 +1,4 @@
+setclipboard("https://discord.gg/JXgCz6uC2U")
 game:GetService("Players").LocalPlayer:Kick(
 	"Temporary Shutdown\n\n" ..
 		"The script is temporarily disabled for maintenance.\n" ..
