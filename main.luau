@@ -9,12 +9,12 @@ local __index = {
 	[95206881] = 'test.luau',
 	[2753915549] = '872b589351d1b30c6ec9701fc6b92b29ac86663cc9fa6c4cfe3ffafa14e7d68d',
 	[4442272183] = '872b589351d1b30c6ec9701fc6b92b29ac86663cc9fa6c4cfe3ffafa14e7d68d',
-	[7449423635] = '872b589351d1b30c6ec9701fc6b92b29ac86663cc9fa6c4cfe3ffafa14e7d68d'
+	[7449423635] = '872b589351d1b30c6ec9701fc6b92b29ac86663cc9fa6c4cfe3ffafa14e7d68d',
+    [79091703265657] = '872b589351d1b30c6ec9701fc6b92b29ac86663cc9fa6c4cfe3ffafa14e7d68d'
 }
-
 do
 	if not __index[game.PlaceId] then
-		return 
+		return warn('HV')
 	end
 end
 
